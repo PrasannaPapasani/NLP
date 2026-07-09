@@ -1,0 +1,381 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMX6C2JjiTQR9SrSg0oB9uo",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/PrasannaPapasani/NLP/blob/main/feature1\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "pip install nltk"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ixnbX8ES1ZyD",
+        "outputId": "3bb8697d-06b9-4d41-ddf4-fca1edb9eead"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: nltk in /usr/local/lib/python3.12/dist-packages (3.9.1)\n",
+            "Requirement already satisfied: click in /usr/local/lib/python3.12/dist-packages (from nltk) (8.4.2)\n",
+            "Requirement already satisfied: joblib in /usr/local/lib/python3.12/dist-packages (from nltk) (1.5.3)\n",
+            "Requirement already satisfied: regex>=2021.8.3 in /usr/local/lib/python3.12/dist-packages (from nltk) (2025.11.3)\n",
+            "Requirement already satisfied: tqdm in /usr/local/lib/python3.12/dist-packages (from nltk) (4.67.3)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import nltk\n",
+        "nltk.download('punkt')\n",
+        "nltk.download('stopwords')\n",
+        "nltk.download('wordnet')\n",
+        "nltk.download('averaged_perceptron_tagger')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "2cdBwair1Ztt",
+        "outputId": "50f59aeb-1e9b-4b3d-8d56-b2de2af80c18"
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "[nltk_data] Downloading package punkt to /root/nltk_data...\n",
+            "[nltk_data]   Unzipping tokenizers/punkt.zip.\n",
+            "[nltk_data] Downloading package stopwords to /root/nltk_data...\n",
+            "[nltk_data]   Unzipping corpora/stopwords.zip.\n",
+            "[nltk_data] Downloading package wordnet to /root/nltk_data...\n",
+            "[nltk_data] Downloading package averaged_perceptron_tagger to\n",
+            "[nltk_data]     /root/nltk_data...\n",
+            "[nltk_data]   Unzipping taggers/averaged_perceptron_tagger.zip.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "True"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 20
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from nltk.tokenize import sent_tokenize\n",
+        "\n",
+        "text = \"Elon Reeve Musk (/ˈiːlɒn/ ⓘ EE-lon; born June 28, 1971) is a businessman and former public official who is the CEO and largest shareholder of Tesla and SpaceX. Musk has been the wealthiest person in the world since 2025, and became the first and only trillionaire in terms of US dollars in June 2026; as of July 8, 2026, Forbes estimates his net worth to be US$916 billion.\"\n",
+        "sentences = sent_tokenize(text)\n",
+        "print(sentences)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "zo1bvO2_1ZoZ",
+        "outputId": "2f671635-104f-460f-9aa4-ff5d605847e7"
+      },
+      "execution_count": 36,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['Elon Reeve Musk (/ˈiːlɒn/ ⓘ EE-lon; born June 28, 1971) is a businessman and former public official who is the CEO and largest shareholder of Tesla and SpaceX.', 'Musk has been the wealthiest person in the world since 2025, and became the first and only trillionaire in terms of US dollars in June 2026; as of July 8, 2026, Forbes estimates his net worth to be US$916 billion.']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from nltk.tokenize import word_tokenize\n",
+        "\n",
+        "words = word_tokenize(text)\n",
+        "print(words)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "apPp-RLm1Zk1",
+        "outputId": "479040bb-ce32-4cf1-ae4d-ff63d8cbf46d"
+      },
+      "execution_count": 37,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['Elon', 'Reeve', 'Musk', '(', '/ˈiːlɒn/', 'ⓘ', 'EE-lon', ';', 'born', 'June', '28', ',', '1971', ')', 'is', 'a', 'businessman', 'and', 'former', 'public', 'official', 'who', 'is', 'the', 'CEO', 'and', 'largest', 'shareholder', 'of', 'Tesla', 'and', 'SpaceX', '.', 'Musk', 'has', 'been', 'the', 'wealthiest', 'person', 'in', 'the', 'world', 'since', '2025', ',', 'and', 'became', 'the', 'first', 'and', 'only', 'trillionaire', 'in', 'terms', 'of', 'US', 'dollars', 'in', 'June', '2026', ';', 'as', 'of', 'July', '8', ',', '2026', ',', 'Forbes', 'estimates', 'his', 'net', 'worth', 'to', 'be', 'US', '$', '916', 'billion', '.']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from nltk.corpus import stopwords\n",
+        "\n",
+        "stop_words = set(stopwords.words('english'))\n",
+        "\n",
+        "filtered_words = [w for w in words if w.lower() not in stop_words]\n",
+        "print(filtered_words)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "NSERjuYr1Zhn",
+        "outputId": "349ad743-aa68-4a4f-cf84-fd6b93d98b3f"
+      },
+      "execution_count": 38,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['Elon', 'Reeve', 'Musk', '(', '/ˈiːlɒn/', 'ⓘ', 'EE-lon', ';', 'born', 'June', '28', ',', '1971', ')', 'businessman', 'former', 'public', 'official', 'CEO', 'largest', 'shareholder', 'Tesla', 'SpaceX', '.', 'Musk', 'wealthiest', 'person', 'world', 'since', '2025', ',', 'became', 'first', 'trillionaire', 'terms', 'US', 'dollars', 'June', '2026', ';', 'July', '8', ',', '2026', ',', 'Forbes', 'estimates', 'net', 'worth', 'US', '$', '916', 'billion', '.']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from nltk.stem import PorterStemmer\n",
+        "\n",
+        "ps = PorterStemmer()\n",
+        "stemmed = [ps.stem(w) for w in words]\n",
+        "print(stemmed)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "oKc4c3ae1Zff",
+        "outputId": "7d7efbd6-ab76-480d-dc36-e9d04dc83abf"
+      },
+      "execution_count": 39,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['elon', 'reev', 'musk', '(', '/ˈiːlɒn/', 'ⓘ', 'ee-lon', ';', 'born', 'june', '28', ',', '1971', ')', 'is', 'a', 'businessman', 'and', 'former', 'public', 'offici', 'who', 'is', 'the', 'ceo', 'and', 'largest', 'sharehold', 'of', 'tesla', 'and', 'spacex', '.', 'musk', 'ha', 'been', 'the', 'wealthiest', 'person', 'in', 'the', 'world', 'sinc', '2025', ',', 'and', 'becam', 'the', 'first', 'and', 'onli', 'trillionair', 'in', 'term', 'of', 'us', 'dollar', 'in', 'june', '2026', ';', 'as', 'of', 'juli', '8', ',', '2026', ',', 'forb', 'estim', 'hi', 'net', 'worth', 'to', 'be', 'us', '$', '916', 'billion', '.']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from nltk.stem import WordNetLemmatizer\n",
+        "\n",
+        "lemmatizer = WordNetLemmatizer()\n",
+        "lemmatized = [lemmatizer.lemmatize(w) for w in words]\n",
+        "print(lemmatized)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "lEbVPFkX1ZdR",
+        "outputId": "189ac193-1a4a-4327-ffca-3ebef5eb1c53"
+      },
+      "execution_count": 40,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['Elon', 'Reeve', 'Musk', '(', '/ˈiːlɒn/', 'ⓘ', 'EE-lon', ';', 'born', 'June', '28', ',', '1971', ')', 'is', 'a', 'businessman', 'and', 'former', 'public', 'official', 'who', 'is', 'the', 'CEO', 'and', 'largest', 'shareholder', 'of', 'Tesla', 'and', 'SpaceX', '.', 'Musk', 'ha', 'been', 'the', 'wealthiest', 'person', 'in', 'the', 'world', 'since', '2025', ',', 'and', 'became', 'the', 'first', 'and', 'only', 'trillionaire', 'in', 'term', 'of', 'US', 'dollar', 'in', 'June', '2026', ';', 'a', 'of', 'July', '8', ',', '2026', ',', 'Forbes', 'estimate', 'his', 'net', 'worth', 'to', 'be', 'US', '$', '916', 'billion', '.']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "nltk.download('averaged_perceptron_tagger_eng')\n",
+        "from nltk import pos_tag\n",
+        "\n",
+        "pos = pos_tag(words)\n",
+        "print(pos)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "CbJA_ND61ZZg",
+        "outputId": "80f4668d-a9e4-4a4f-e45b-8eed9238a885"
+      },
+      "execution_count": 41,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[('Elon', 'NNP'), ('Reeve', 'NNP'), ('Musk', 'NNP'), ('(', '('), ('/ˈiːlɒn/', 'JJ'), ('ⓘ', 'NNP'), ('EE-lon', 'NNP'), (';', ':'), ('born', 'VBN'), ('June', 'NNP'), ('28', 'CD'), (',', ','), ('1971', 'CD'), (')', ')'), ('is', 'VBZ'), ('a', 'DT'), ('businessman', 'NN'), ('and', 'CC'), ('former', 'JJ'), ('public', 'JJ'), ('official', 'NN'), ('who', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('CEO', 'NNP'), ('and', 'CC'), ('largest', 'JJS'), ('shareholder', 'NN'), ('of', 'IN'), ('Tesla', 'NNP'), ('and', 'CC'), ('SpaceX', 'NNP'), ('.', '.'), ('Musk', 'NNP'), ('has', 'VBZ'), ('been', 'VBN'), ('the', 'DT'), ('wealthiest', 'JJS'), ('person', 'NN'), ('in', 'IN'), ('the', 'DT'), ('world', 'NN'), ('since', 'IN'), ('2025', 'CD'), (',', ','), ('and', 'CC'), ('became', 'VBD'), ('the', 'DT'), ('first', 'JJ'), ('and', 'CC'), ('only', 'RB'), ('trillionaire', 'NN'), ('in', 'IN'), ('terms', 'NNS'), ('of', 'IN'), ('US', 'NNP'), ('dollars', 'NNS'), ('in', 'IN'), ('June', 'NNP'), ('2026', 'CD'), (';', ':'), ('as', 'IN'), ('of', 'IN'), ('July', 'NNP'), ('8', 'CD'), (',', ','), ('2026', 'CD'), (',', ','), ('Forbes', 'NNP'), ('estimates', 'VBZ'), ('his', 'PRP$'), ('net', 'JJ'), ('worth', 'NN'), ('to', 'TO'), ('be', 'VB'), ('US', 'NNP'), ('$', '$'), ('916', 'CD'), ('billion', 'CD'), ('.', '.')]\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "[nltk_data] Downloading package averaged_perceptron_tagger_eng to\n",
+            "[nltk_data]     /root/nltk_data...\n",
+            "[nltk_data]   Package averaged_perceptron_tagger_eng is already up-to-\n",
+            "[nltk_data]       date!\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "nltk.download('maxent_ne_chunker_tab')\n",
+        "nltk.download('words')\n",
+        "\n",
+        "from nltk import ne_chunk\n",
+        "\n",
+        "ner = ne_chunk(pos)\n",
+        "print(ner)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ztKuEsug1ZVj",
+        "outputId": "e642e708-34f4-4b87-de5d-8e3331d7a866"
+      },
+      "execution_count": 35,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "[nltk_data] Downloading package maxent_ne_chunker_tab to\n",
+            "[nltk_data]     /root/nltk_data...\n",
+            "[nltk_data]   Package maxent_ne_chunker_tab is already up-to-date!\n",
+            "[nltk_data] Downloading package words to /root/nltk_data...\n",
+            "[nltk_data]   Unzipping corpora/words.zip.\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "(S\n",
+            "  (GPE Hello/NN)\n",
+            "  !/.\n",
+            "  I/PRP\n",
+            "  am/VBP\n",
+            "  learning/VBG\n",
+            "  (ORGANIZATION NLP/NNP)\n",
+            "  ./.\n",
+            "  (ORGANIZATION NLTK/NNP)\n",
+            "  is/VBZ\n",
+            "  interesting/JJ\n",
+            "  ./.)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "help(pos_tag)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ikVRQQpi1ZSi",
+        "outputId": "bba39011-cdf6-49db-980e-41d7188ca70c"
+      },
+      "execution_count": 44,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Help on function pos_tag in module nltk.tag:\n",
+            "\n",
+            "pos_tag(tokens, tagset=None, lang='eng')\n",
+            "    Use NLTK's currently recommended part of speech tagger to\n",
+            "    tag the given list of tokens.\n",
+            "\n",
+            "        >>> from nltk.tag import pos_tag\n",
+            "        >>> from nltk.tokenize import word_tokenize\n",
+            "        >>> pos_tag(word_tokenize(\"John's big idea isn't all that bad.\")) # doctest: +NORMALIZE_WHITESPACE\n",
+            "        [('John', 'NNP'), (\"'s\", 'POS'), ('big', 'JJ'), ('idea', 'NN'), ('is', 'VBZ'),\n",
+            "        (\"n't\", 'RB'), ('all', 'PDT'), ('that', 'DT'), ('bad', 'JJ'), ('.', '.')]\n",
+            "        >>> pos_tag(word_tokenize(\"John's big idea isn't all that bad.\"), tagset='universal') # doctest: +NORMALIZE_WHITESPACE\n",
+            "        [('John', 'NOUN'), (\"'s\", 'PRT'), ('big', 'ADJ'), ('idea', 'NOUN'), ('is', 'VERB'),\n",
+            "        (\"n't\", 'ADV'), ('all', 'DET'), ('that', 'DET'), ('bad', 'ADJ'), ('.', '.')]\n",
+            "\n",
+            "    NB. Use `pos_tag_sents()` for efficient tagging of more than one sentence.\n",
+            "\n",
+            "    :param tokens: Sequence of tokens to be tagged\n",
+            "    :type tokens: list(str)\n",
+            "    :param tagset: the tagset to be used, e.g. universal, wsj, brown\n",
+            "    :type tagset: str\n",
+            "    :param lang: the ISO 639 code of the language, e.g. 'eng' for English, 'rus' for Russian\n",
+            "    :type lang: str\n",
+            "    :return: The tagged tokens\n",
+            "    :rtype: list(tuple(str, str))\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "OPT0mwG71ZPe"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
